@@ -10,7 +10,7 @@ class LexingError(Exception):
     """raises an exception if an unsupported character is used """
     pass
 
-
+# precompile regular expressions
 numbers = re.compile(r"^((\d+(\.\d*)?)|(\.\d+))$")
 idents = re.compile(r"^[a-zA-Z]+[a-zA-Z0-9_]*$")
 symbol = re.compile(r"([+\-*/\^(){\},:=])")

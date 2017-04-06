@@ -5,8 +5,10 @@ import json
 pp = pprint.PrettyPrinter(indent=1, depth=100)
 
 """
-This program executes the quirk program of the given parse tree(that has been jsoned).
-with the print will write to the quirk.out file.
+This program executes the quirk program of the input parse tree ***parse tree is in json form***
+print will write to the quirk.out file.
+
+Bonus: checks for if return length matches assignment length and if index is with in return length
 """
 
 
@@ -27,24 +29,27 @@ def lookup_in_scope_stack(name, scope):
         return scope[name]
     else:
         if "__parent__" in scope:
-            print("not found in scope. Looking at __parent__")
+            # print("not found in scope. Looking at __parent__")
             return lookup_in_scope_stack(name, scope["__parent__"])
         else:
-            print("ERROR: variable " + name + " was not found in scope stack!")
+            # print("ERROR: variable " + name + " was not found in scope stack!")
+            pass
 
 
 def get_name_from_ident(tok):
-    """Returns the string lexeme associated with an IDENT token, tok.
     """
-    print("get_name_from_ident() " + tok)
+    Returns the string lexeme associated with an IDENT token, tok.
+    """
+    # print("get_name_from_ident() " + tok)
     colon_index = tok.find(":")
     return tok[colon_index + 1:]
 
 
 def get_number_from_ident(tok):
-    """Returns the float lexeme associated with an NUMBER token, tok.
     """
-    print("get_number_from_ident()" + tok)
+    Returns the float lexeme associated with an NUMBER token, tok.
+    """
+    # print("get_number_from_ident()" + tok)
     colon_index = tok.find(":")
     return float(tok[colon_index + 1:])
 
@@ -172,7 +177,6 @@ def FunctionBody0(pt, scope):
     :param scope: scope of the subtree
     :return: subtrees of FunctionBody
     """
-    print(pt[2])
     return [pt[1], pt[2]]
 
 
@@ -261,9 +265,11 @@ def Print0(pt, scope):
     :param scope: scope of the subtree
     """
     global output
-    res = str(func_by_name(pt[2][0], pt[2], scope))
+    res = func_by_name(pt[2][0], pt[2], scope)
     if isinstance(res, list):
         res = res[0]
+    res = str(res)
+    print(res)
     output.write(res + '\n')
 
 
@@ -419,7 +425,6 @@ def FunctionCall0(pt, scope):
         func_by_name(body[0][0], body[0], nscope)
         results = func_by_name(body[1][0], body[1], nscope)
     index = func_by_name(pt[5][0], pt[5], nscope)
-    print(int(index))
     # checks if index is a float
     if index == int(index):
         # checks if index is in return array

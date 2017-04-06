@@ -8,7 +8,7 @@ to tokenize the text, basically its an easy way to combine regular expressions b
 must be after keywords.
 Will raise exception if unsupported characters are used.
 
-if this is too cheaty I attached my original lexer.
+if this is too cheaty I attached my original lexer (lexer2.py).
 """
 
 

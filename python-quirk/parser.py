@@ -1,15 +1,16 @@
 import sys
 from types import GeneratorType
-import pprint
+# import pprint
 import json
 
 """
 This is a generic parse tree generator that uses a mix of iterative and recursive decent. The program has a predefined
 grammar(based on the quirk language) but that can modified depending on the language. Each key in the grammar object
 corresponds to a rule(array) of the quirk grammar. Each index of the rule array is a possible replacement for that node
-. A replacement rule greater with more than one entry is broken into tuples so the parser can parse 'subtrees', which I
+. A replacement rule greater than more one entry is broken into tuples so the parser can parse 'subtrees', which I
 believe negates left recursion.
-Will raise an error if there is a problem with the syntax. I tried capture the point where syntax fails but it doesnt
+
+Will raise an error if there is a problem with the syntax. I tried to capture the point where syntax fails but it doesnt
 seem to work.
 """
 
@@ -85,11 +86,14 @@ def get_tree(gen):
     :param gen: an AST generator
     :return: returns a valid AST(as nested arrays) or false if there is none.
     """
+    i = None
     for tree, index in gen:
+        i = index
         if tree:
             return (tree, index), gen
     else:
-        return (False, index), gen
+        return (False, i), gen
+
 # end utilities
 
 
@@ -144,16 +148,16 @@ def parse_generator(gram, index):
     """
     Generates a valid parse tree(possibly multiple) or false if there is none. Generators are 'lazy' and do not
     execute when call but return a generator object that can executed(iterated) later. This was done to more easily
-    determin between subtrees(tuples), nodes, and terminals and because there could be multiple valid syntax paths (and
+    determine between subtrees(tuples), nodes, and terminals and because there could be multiple valid syntax paths (and
     because it was cool to learn). So it can probably be implemented as a standard function.
     :param gram: key to the entry in grammar
     :param index: of global tokens
     :return: a generator that yields a valid parse tree and new index of the given syntax, or false if there is none.
     """
-    syntaxes = grammar.get(gram)
+    rules = grammar.get(gram)
     my_index = index
     i = 0
-    for path in syntaxes:
+    for path in rules:
         index = my_index
         node = [gram + str(i)]
         if type(path) is tuple:
@@ -189,6 +193,7 @@ def parse():
     if index != length:
         raise SyntaxError("ERROR at index: ", index, " and token:", token[index])
     else:
+        #pprint.pprint(tree)
         sys.stdout.write(json.dumps(tree))
 
 if __name__ == "__main__":

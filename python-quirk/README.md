@@ -4,11 +4,12 @@ functions, perform basic arithmetic, and print arguments.
 Each program can be run individually. To run a quirk program from source text pipe the files like so:
 python lexer.py < yourprogram.q | python parser.py | python interpreter.py
 
-print statements will output to a "quirk.out" file
+print statements will output to console and to a "quirk.out" file
 
 the lexer expects a text file of the quirk program, it creates tokens from the text.
-the parser will create a parse tree from the lexer's tokens.
-and the interpreter will execute the parse tree outputing arguments if printed.
+the parser will create a parse tree from the lexer's tokens ***outputs JSON parse tree***
+and the interpreter will execute the parse tree outputing arguments if printed. ***input is a JSON parse tree***
+completed interpreter bonuses
 
 I found a class from the default re module that greatly simplifies my lexer. If this seems too lazy (or not full credit)
-I provided original lexer(lexer2.py) which is a more standard approach.
+I provided my original lexer(lexer2.py) which is a more standard approach.
