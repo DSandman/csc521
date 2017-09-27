@@ -1,15 +1,37 @@
-These programs are used to interpret the quirk language. Quirk has limited functionality but can declare variables and
-functions, perform basic arithmetic, and print arguments.
+# Quirk python interpreter
 
-Each program can be run individually. To run a quirk program from source text pipe the files like so:
+These programs are used to interpret the quirk language. Quirk has limited functionality but can declare variables, functions, perform basic arithmetic, and print arguments.
+The specifications for the Quirk language can be found [here](https://github.com/dr-jam/csc521/tree/master/quirk).
+
+## Getting Started
+
+### Prerequisites
+
+Python 3
+
+### Execution
+Each program (lexer, parser, interpreter) can be run individually.
+
+To run the lexer with a given input file:
+```
+python lexer.py < yourprogram.q
+```
+
+To run the parser :
+```
+python lexer.py < yourprogram.q | python parser.py
+```
+
+To execute a quirk program from source text:
+```
 python lexer.py < yourprogram.q | python parser.py | python interpreter.py
-
+```
 print statements will output to console and to a "quirk.out" file
 
-the lexer expects a text file of the quirk program, it creates tokens from the text.
-the parser will create a parse tree from the lexer's tokens ***outputs JSON parse tree***
-and the interpreter will execute the parse tree outputing arguments if printed. ***input is a JSON parse tree***
-completed interpreter bonuses
+## Details
 
-I found a class from the default re module that greatly simplifies my lexer. If this seems too lazy (or not full credit)
-I provided my original lexer(lexer2.py) which is a more standard approach.
+The lexer expects a text file of the quirk program and outputs tokens. The parser will create a parse tree (top-down) from the lexer's tokens and outputs a JSON parse tree. The interpreter will execute this parse tree, outputting arguments to the console and to a "quirk.out" file if printed.
+
+I found a python class from the default re module that greatly simplifies my lexer. I provided my original lexer (lexer2.py) if this seems too easy (or not full credit).
+
+My parser is also different than the suggested implementation. It is a generalized solution that can be modified to parse different languages from a provided grammar specification, more details in that file.
